@@ -29,15 +29,20 @@ extension TimeInterval.TimeIntervalFormatStyle: ParseableFormatStyle {
     
     /// Returns a string based on an input time interval. String format may include milliseconds or not
     /// Example: "2:33:29.632" aka 2 hours, 33 minutes, 29.632 seconds
-    public func format(_ value: TimeInterval) -> String {
-        let hour = Int((value / TimeInterval.secondsPerHour).rounded(.towardZero))
-        let minute = Int((value / TimeInterval.secondsPerMinute).truncatingRemainder(dividingBy: TimeInterval.minutesPerHour))
-        let second = Int(value.truncatingRemainder(dividingBy: TimeInterval.secondsPerMinute))
+    public func format(_ value: TimeInterval?) -> String {
+      if (value != nil) {
+        let sign = value!<0 ? -1 : 1
+        let val = abs(value!)
+        let hour = Int((val / TimeInterval.secondsPerHour).rounded(.towardZero))*sign
+        let minute = Int((val / TimeInterval.secondsPerMinute).truncatingRemainder(dividingBy: TimeInterval.minutesPerHour))
+        let second = Int(val.truncatingRemainder(dividingBy: TimeInterval.secondsPerMinute))
         if showMilliseconds {
-            let millisecond = Int((value * TimeInterval.millisecondsPerSecond).truncatingRemainder(dividingBy: TimeInterval.millisecondsPerSecond))
-            return String(format:"%d:%02d:%02d.%03d", hour, minute, second, millisecond) // ex: 10:04:09.689
+          let millisecond = Int((val * TimeInterval.millisecondsPerSecond).truncatingRemainder(dividingBy: TimeInterval.millisecondsPerSecond))
+          return String(format:"%d:%02d:%02d.%03d", hour, minute, second, millisecond) // ex: 10:04:09.689
         } else {
-            return String(format:"%d:%02d:%02d", hour, minute, second) // ex: 10:04:09
+          return String(format:"%d:%02d:%02d", hour, minute, second) // ex: 10:04:09
         }
+      }
+      return ""
     }
 }
