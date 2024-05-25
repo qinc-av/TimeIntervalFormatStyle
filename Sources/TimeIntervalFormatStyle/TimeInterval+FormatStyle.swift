@@ -24,5 +24,8 @@ public extension FormatStyle where Self == TimeInterval.TimeIntervalFormatStyle 
     static func timeInterval(showMilliseconds: Bool = false ) -> TimeInterval.TimeIntervalFormatStyle {
         TimeInterval.TimeIntervalFormatStyle(showMilliseconds)
     }
+    static func optionalTimeInterval(showMilliseconds: Bool = false ) -> TimeInterval.OptionalTimeIntervalFormatStyle {
+        TimeInterval.OptionalTimeIntervalFormatStyle(showMilliseconds)
+    }
     
 }
